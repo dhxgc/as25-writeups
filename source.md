@@ -8,5 +8,5 @@
  - 
 
 Общая информация:
-- Настройка вланов на huawei + сравнение с cisco: https://habr.com/ru/articles/153401/
+- Настройка вланов на коммутаторах huawei + сравнение с cisco: https://habr.com/ru/articles/153401/
 - 
