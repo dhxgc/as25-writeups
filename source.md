@@ -6,7 +6,9 @@
  - 
 # Мануалы:
 
-- Типовые варианты настройки VLAN на устройствах huawei (`Задания 3 и 5`), сначала - коммутаторы, потом добавляются роутеры: https://support.huawei.com/enterprise/ru/doc/EDOC1000069520/b699322c/typical-vlan-configuration 
+- [Типовые варианты настройки VLAN на устройствах huawei (`Задания 3 и 5`), сначала - коммутаторы, потом добавляются роутеры](https://support.huawei.com/enterprise/ru/doc/EDOC1000069520/b699322c/typical-vlan-configuration)
+- [BGP Debian](https://docs.frrouting.org/en/latest/bgp.html)
+- 
 
 # Общая информация:
 - Настройка вланов на коммутаторах huawei + сравнение с cisco: https://habr.com/ru/articles/153401/
