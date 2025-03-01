@@ -3,7 +3,7 @@
  - Откуда качать пакеты программ (с files.atom25.ru или откуда-то еще)?
  - PI адреса только у ZVIRT?
  - Почему к SW123 заходит `vlan 300`, а по таску должен идти `native`?
- - 
+ - Правильно ли мы понимаем, что в MAIN'е - NativeVLAN - 300? Или же смотреть не на топологию, а на таблицу? Хотя по моему мнению, врет таблица, и в DC `Native` - 666, а в MAIN `Native`- 300
 # Мануалы:
 - [Типовые варианты настройки VLAN на устройствах huawei (`Задания 3 и 5`), сначала - коммутаторы, потом добавляются роутеры](https://support.huawei.com/enterprise/ru/doc/EDOC1000069520/b699322c/typical-vlan-configuration)
 - [BGP Debian](https://docs.frrouting.org/en/latest/bgp.html)
