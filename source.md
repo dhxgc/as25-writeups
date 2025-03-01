@@ -12,7 +12,6 @@
 - [LACP Debian](https://wiki.debian.org/Bonding#Shutdown_.2F_Unconfigure_Existing_Interfaces)
 - [Deepseek про OVS в main](https://github.com/dhxgc/as25-writeups/blob/main/ai/OVS-main.md)
 - [Установка часового пояса/указание `NTP` сервера для синхронизации на `AR, USG`](https://admin-gu.ru/device/huawei/nastrojka-ntp-timezone-daty-i-vremeni-na-huawei)
-- [Установка часового пояса средствами timedatectl на `debian` (нужно только set-timezone)](https://serveradmin.ru/ustanovka-nastrojka-i-sinhronizacziya-vremeni-v-debian/)
-- [Подключение клиентов `NTP-сервера на debian`]
+- [`NTP на Astra` (все возможные службы + настройка часового пояса через timedatectl + клиенты астры)](https://wiki.astralinux.ru/pages/viewpage.action?pageId=27361687)
 # Общая информация:
 - Настройка вланов на коммутаторах huawei + сравнение с cisco: https://habr.com/ru/articles/153401/
