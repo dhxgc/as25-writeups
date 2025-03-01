@@ -16,4 +16,4 @@
 - [`BIND9 + BIND9_DLZ на Astra`](https://wiki.astralinux.ru/pages/viewpage.action?pageId=27362248)
 - [`GRE + OSPF на Huawei`](https://support.huawei.com/enterprise/en/doc/EDOC0100585934/55280d46/example-for-configuring-a-gre-tunnel-and-ospf-on-the-tunnel-to-implement-interworking#EN-US_TASK_0177893299)
 # Общая информация:
-- Настройка вланов на коммутаторах huawei + сравнение с cisco: https://habr.com/ru/articles/153401/
+- [Настройка вланов на коммутаторах huawei + сравнение с cisco](https://habr.com/ru/articles/153401/)
