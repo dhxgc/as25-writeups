@@ -13,5 +13,6 @@
 - [Deepseek про OVS в main](https://github.com/dhxgc/as25-writeups/blob/main/ai/OVS-main.md)
 - [Установка часового пояса/указание `NTP` сервера для синхронизации на `AR, USG`](https://admin-gu.ru/device/huawei/nastrojka-ntp-timezone-daty-i-vremeni-na-huawei)
 - [`NTP на Astra` (все возможные службы + настройка часового пояса через timedatectl + клиенты астры)](https://wiki.astralinux.ru/pages/viewpage.action?pageId=27361687)
+- [`BIND9 + BIND9_DLZ на Astra`](https://wiki.astralinux.ru/pages/viewpage.action?pageId=27362248)
 # Общая информация:
 - Настройка вланов на коммутаторах huawei + сравнение с cisco: https://habr.com/ru/articles/153401/
