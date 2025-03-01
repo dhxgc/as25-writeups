@@ -17,5 +17,7 @@
 - [`GRE + OSPF на Huawei`](https://support.huawei.com/enterprise/en/doc/EDOC0100585934/55280d46/example-for-configuring-a-gre-tunnel-and-ospf-on-the-tunnel-to-implement-interworking#EN-US_TASK_0177893299)
 - [`NAT на huawei`](https://support.huawei.com/enterprise/en/doc/EDOC1100034071/e96c0933/example-for-configuring-nat)
 - [`NAT vyos`](https://docs.vyos.io/en/latest/configuration/nat/index.html)
+- [GitFlic на Астре](https://docs.gitflic.ru/setup/gitflic_app/astra_setup_and_start/?ysclid=m7qozzn18s415352616#postgresql)
+- [Свой репозиторий на Астре](https://wiki.astralinux.ru/pages/viewpage.action?pageId=3277393&ysclid=m7qp7rnp4q112377109)
 # Общая информация:
 - [Настройка вланов на коммутаторах huawei + сравнение с cisco](https://habr.com/ru/articles/153401/)
