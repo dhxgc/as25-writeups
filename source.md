@@ -19,5 +19,6 @@
 - [`NAT vyos`](https://docs.vyos.io/en/latest/configuration/nat/index.html)
 - [GitFlic на Астре](https://docs.gitflic.ru/setup/gitflic_app/astra_setup_and_start/?ysclid=m7qozzn18s415352616#postgresql)
 - [Свой репозиторий на Астре](https://wiki.astralinux.ru/pages/viewpage.action?pageId=3277393&ysclid=m7qp7rnp4q112377109)
+- (SSH: Huawei (AR/USG), VyOS, FRR, Windows - надо найти)[]
 # Общая информация:
 - [Настройка вланов на коммутаторах huawei + сравнение с cisco](https://habr.com/ru/articles/153401/)
