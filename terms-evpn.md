@@ -4,7 +4,7 @@
 4. BGP peering
 5. SAG
 6. SVI-интерфейс
-7. 
+7. Кластер отказоустойчивости в Usergate
 
 VXLAN:
 - VTEP
