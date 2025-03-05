@@ -24,5 +24,5 @@ set network interface adapter port0 iface-mode manual
 ``` 
 - Создать маршрут по умолчанию:
 ```
-create network gateway interface port2 ip <ip> 
+create network gateway interface port2 ip <ip> enabled on default on
 ```
