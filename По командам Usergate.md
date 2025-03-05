@@ -18,10 +18,10 @@ set network interface adapter port2 ip-addresses [ 192.168.99.2/24 ]
 ```
 delete network interface adapter port2 ip-addresses [ 192.168.99.2/24 ]
 ```
-  - Если не удаляется - сделать интерфейс manual (убирается ip):
-    ```
-    set network interface adapter port0 iface-mode manual
-    ```
+Если не удаляется - сделать интерфейс manual (убирается ip):
+```
+set network interface adapter port0 iface-mode manual
+``` 
 - Создать маршрут по умолчанию:
 ```
 create network gateway interface port2 ip <ip> 
