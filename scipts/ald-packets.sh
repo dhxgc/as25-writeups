@@ -21,5 +21,4 @@ then
 
     sudo apt install -y -q fly-all-main
     sudo DEBIAN_FRONTEND=noninteractive apt-get install -y -q aldpro-mp
-
 fi
