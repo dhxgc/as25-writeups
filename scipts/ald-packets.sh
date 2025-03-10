@@ -5,7 +5,6 @@ read -p "> " INSTALL_ALD
 
 if [[ "${INSTALL_ALD}" == "no" ]];
 then
-    echo PREPARE
 
     astra-modeswitch set 2
     astra-mic-control enable
