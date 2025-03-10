@@ -11,7 +11,7 @@ then
 elif [[ "${ASTRA_VERSION}" =~ "1.8" ]];
 then
     cp /etc/apt/sources.list{,.old}
-    echo "deb https://dl.astralinux.ru/astra/frozen/1.8_x86-64/1.8.1/repository-base 1.8_x86-64 main contrib non-free" > /etc/apt/sources.list
+    echo "deb https://dl.astralinux.ru/astra/frozen/1.8_x86-64/1.8.1/repository-main 1.8_x86-64 main contrib non-free" > /etc/apt/sources.list
     echo "deb https://dl.astralinux.ru/astra/frozen/1.8_x86-64/1.8.1/repository-extended 1.8_x86-64 main contrib non-free" >> /etc/apt/sources.list
 fi
 
