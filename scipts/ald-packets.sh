@@ -1,5 +1,10 @@
 #!/bin/bash
 
+# Простая установка, без модулей
+# Требования:
+# 1. frozen репозитории
+# 2. astra 1.7
+
 echo -e "Установить ALD PRO?\nПри выборе no - будут сделаны подготовительные действия [yes/no]:"
 read -p "> " INSTALL_ALD
 
@@ -13,12 +18,13 @@ then
 
     echo "1) Hostname"
     echo "2) Hosts"
-    echo "3) Exit"
+    echo "3) Reboot"
 
 elif [[ "${INSTALL_ALD}" == "yes" ]];
 then
     sudo apt update
 
     sudo apt install -y -q fly-all-main
-    sudo DEBIAN_FRONTEND=noninteractive apt-get install -y -q aldpro-mp
+    sudo DEBIAN_FRONTEND=noninteractive apt-get install -y -q aldpro-mp 
 fi
+
