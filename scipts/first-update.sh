@@ -15,4 +15,8 @@ then
     echo "deb https://dl.astralinux.ru/astra/frozen/1.8_x86-64/1.8.1/repository-extended 1.8_x86-64 main contrib non-free" >> /etc/apt/sources.list
 fi
 
+# deb https://dl.astralinux.ru/astra/frozen/1.7_x86-64/1.7.5/uu/1/repository-base 1.7_x86-64 main contrib non-free
+# deb https://dl.astralinux.ru/astra/frozen/1.7_x86-64/1.7.5/uu/1/repository-extended 1.7_x86-64 main contrib non-free
+
+
 sudo apt update
