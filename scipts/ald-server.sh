@@ -2,8 +2,7 @@
 
 # Простая установка, без модулей
 # Требования:
-# 1. frozen репозитории
-# 2. astra 1.7
+# first-update.sh
 
 echo -e "Установить ALD PRO?\nПри выборе no - будут сделаны подготовительные действия [yes/no]:"
 read -p "> " INSTALL_ALD
@@ -25,6 +24,7 @@ then
     sudo apt update
 
     sudo apt install -y -q fly-all-main
-    sudo DEBIAN_FRONTEND=noninteractive apt-get install -y -q aldpro-mp 
+    # sudo DEBIAN_FRONTEND=noninteractive apt-get install -y -q aldpro-mp 
+    sudo DEBIAN_FRONTEND=noninteractive apt-get install -y -q aldpro-mp aldpro-gc aldpro-syncer
 fi
 
