@@ -1,0 +1,138 @@
+ipv6
+#
+router id 3.3.3.3
+#
+stp disable
+#
+authentication-profile name default_authen_profile
+authentication-profile name dot1x_authen_profile
+authentication-profile name dot1xmac_authen_profile
+authentication-profile name mac_authen_profile
+authentication-profile name multi_authen_profile
+authentication-profile name portal_authen_profile
+#
+dhcp enable
+#
+radius-server template default
+#
+pki realm default
+#
+ssl policy default_policy type server
+ pki-realm default
+ version tls1.2
+ ciphersuite rsa_aes_128_cbc_sha rsa_aes_128_sha256 rsa_aes_256_sha256 ecdhe_rsa_aes128_gcm_sha256 ecdhe_rsa_aes256_gcm_sha384
+#
+ike proposal default
+ encryption-algorithm aes-256 aes-192 aes-128
+ dh group14
+ authentication-algorithm sha2-512 sha2-384 sha2-256
+ authentication-method pre-share
+ integrity-algorithm hmac-sha2-256
+ prf hmac-sha2-256
+#
+free-rule-template name default_free_rule
+#
+portal-access-profile name portal_access_profile
+#
+aaa
+ authentication-scheme default
+ authentication-scheme radius
+  authentication-mode radius
+ authorization-scheme default
+ accounting-scheme default
+ local-aaa-user password policy administrator
+ domain default
+  authentication-scheme default
+ domain default_admin
+  authentication-scheme default
+ local-user admin password irreversible-cipher $1a$NWz9SVnCY=$uD{p#/]L,<q3@qGhx>$C{@dRHC6)=(,%_YCTJ~M3$
+ local-user admin privilege level 15
+ local-user admin service-type terminal http
+#
+firewall zone Local
+#
+interface GigabitEthernet0/0/0
+ ipv6 enable
+ ip address 192.168.2.2 255.255.255.0
+ ipv6 address auto link-local
+ ipv6 address auto global default
+ ipv6 address auto dhcp
+#
+interface GigabitEthernet0/0/1
+ ipv6 enable
+ ip address 172.16.2.1 255.255.255.0
+ ipv6 address auto link-local
+ ipv6 address auto global default
+ ipv6 address auto dhcp
+#
+interface GigabitEthernet0/0/2
+ ipv6 enable
+ ipv6 address auto link-local
+ ipv6 address auto global default
+ ip address dhcp-alloc
+ ipv6 address auto dhcp
+#
+interface GigabitEthernet0/0/3
+ ipv6 enable
+ ipv6 address auto link-local
+ ipv6 address auto global default
+ ip address dhcp-alloc
+ ipv6 address auto dhcp
+#
+interface GigabitEthernet0/0/4
+ description VirtualPort
+ ipv6 enable
+ ipv6 address auto link-local
+ ipv6 address auto global default
+ ip address dhcp-alloc
+ ipv6 address auto dhcp
+#
+interface NULL0
+#
+interface Tunnel0/0/1
+ description GRE-VYOS
+ ip address 10.0.0.2 255.255.255.252
+ tunnel-protocol gre
+ source 192.168.2.2
+ destination 192.168.1.2
+ ospf authentication-mode md5 1 cipher %^%#PE;bGQBS<:|;>h4r~Xp9"t<_DW{{s-<{bV*Q5CoT%^%#
+#
+ospf 1
+ area 0.0.0.0
+  network 10.0.0.0 0.0.0.3
+  network 172.16.2.0 0.0.0.255
+#
+ snmp-agent local-engineid 800007DB03E0FC000A0B0C
+ snmp-agent trap enable
+#
+ ssh server permit interface GigabitEthernet0/0/0
+#
+ http secure-server ssl-policy default_policy
+ http secure-server enable
+ http server permit interface GigabitEthernet0/0/0
+#
+ip route-static 0.0.0.0 0.0.0.0 192.168.2.1
+#
+fib regularly-refresh disable
+#
+user-interface con 0
+ authentication-mode aaa
+user-interface vty 0
+ authentication-mode aaa
+ user privilege level 15
+user-interface vty 1 4
+#
+dot1x-access-profile name dot1x_access_profile
+#
+mac-access-profile name mac_access_profile
+#
+ops
+#
+autostart
+#
+secelog
+#
+ ms-channel
+
+#
+return
