@@ -98,5 +98,5 @@ TLSPSKFile=/etc/zabbix/psk/zabbix_agent.psk
 
         PSK identity: dc01_psk
 
-        PSK key: (вставить содержимое файла zabbix_agentd.psk)
+        PSK key: (вставить содержимое файла zabbix_agent.psk)
 ```
