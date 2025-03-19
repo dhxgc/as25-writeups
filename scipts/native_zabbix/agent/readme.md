@@ -1,9 +1,46 @@
-# Порядок действий для развертывания zabbix-агента на Astra linux
+# Порядок действий для развертывания pgsql + zabbix-агента на Astra linux
 
 ```
-sudo apt install zabbix-agent
+sudo apt install -y zabbix-agent php-pgsql
 ```
 ---
+## PGSQL
+
+`sudo -u postgres psql`:
+```
+CREATE ROLE superadmin WITH LOGIN SUPERUSER PASSWORD 'P@ssw0rdSkills';
+
+CREATE ROLE zabbix_user WITH LOGIN PASSWORD 'P@ssw0rdSkills';
+CREATE DATABASE zabbix_db OWNER zabbix_user;
+
+CREATE ROLE gitflic_user WITH LOGIN PASSWORD 'P@ssw0rdSkills';
+CREATE DATABASE gitflic_db OWNER gitflic_user;
+
+CREATE ROLE kc_user WITH LOGIN PASSWORD 'P@ssw0rdSkills';
+CREATE DATABASE keycloak_db OWNER kc_user;
+
+GRANT CONNECT ON DATABASE zabbix_db TO zabbix_user;
+GRANT ALL PRIVILEGES ON DATABASE zabbix_db TO zabbix_user;
+
+GRANT CONNECT ON DATABASE gitflic_db TO gitflic_user;
+GRANT ALL PRIVILEGES ON DATABASE gitflic_db TO gitflic_user;
+
+GRANT CONNECT ON DATABASE keycloak_db TO kc_user;
+GRANT ALL PRIVILEGES ON DATABASE keycloak_db TO kc_user;
+```
+---
+`/etc/postgres/*/main/pg_hba.conf`:
+```
+# TYPE  DATABASE        USER            ADDRESS                 METHOD
+host    zabbix_db       zabbix_user     0.0.0.0/0               scram-sha-256
+host    gitflic_db      gitflic_user    0.0.0.0/0               scram-sha-256
+host    keycloak_db     kc_user         0.0.0.0/0               scram-sha-256
+```
+---
+```
+sudo systemctl restart postgresql
+```
+
 ```
 sudo mkdir -p /etc/zabbix/psk
 sudo chmod 755 /etc/zabbix/psk
