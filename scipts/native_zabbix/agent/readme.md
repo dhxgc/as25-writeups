@@ -35,7 +35,7 @@ TLSPSKFile=/etc/zabbix/psk/zabbix_agent.psk
 ```
     Configuration → Hosts → Create host
 
-        Host name: dc-01
+        Host name: astra
 
         Groups: Linux servers
 
