@@ -54,7 +54,7 @@ GRANT ALL PRIVILEGES ON DATABASE keycloak_db TO kc_user;
 ```
 sudo systemctl restart postgresql
 ```
-
+---
 ```
 sudo mkdir -p /etc/zabbix/psk
 sudo chmod 755 /etc/zabbix/psk
