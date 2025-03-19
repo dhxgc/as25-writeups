@@ -1,0 +1,120 @@
+ interfaces {
+     ethernet eth1 {
+         address 192.168.10.1/24
+         description WAN
+         hw-id 50:00:00:08:00:01
+     }
+     ethernet eth4 {
+         address 192.168.1.2/24
+         hw-id 50:00:00:08:00:00
+     }
+     loopback lo {
+     }
+     tunnel tun0 {
+         address 10.0.0.1/30
+         description GRE-AR
+         encapsulation gre
+         remote 192.168.2.2
+         source-address 192.168.1.2
+     }
+     tunnel tun1 {
+         address 10.1.0.1/30
+         description GRE-PFSENSE
+         encapsulation gre
+         remote 192.168.3.2
+         source-address 192.168.1.2
+     }
+ }
+ protocols {
+     ospf {
+         area 0 {
+             network 10.0.0.0/30
+             network 10.1.0.0/30
+             network 192.168.10.0/24
+         }
+         interface tun0 {
+             authentication {
+                 md5 {
+                     key-id 1 {
+                         md5-key P@ssw0rd
+                     }
+                 }
+             }
+             passive {
+                 disable
+             }
+         }
+         interface tun1 {
+             authentication {
+                 md5 {
+                     key-id 1 {
+                         md5-key P@ssw0rd
+                     }
+                 }
+             }
+             network point-to-point
+             passive {
+                 disable
+             }
+         }
+         parameters {
+             router-id 1.1.1.1
+         }
+         passive-interface default
+     }
+     static {
+         route 0.0.0.0/0 {
+             next-hop 192.168.1.1 {
+             }
+         }
+     }
+ }
+ service {
+     ntp {
+         allow-client {
+             address 127.0.0.0/8
+             address 169.254.0.0/16
+             address 10.0.0.0/8
+             address 172.16.0.0/12
+             address 192.168.0.0/16
+             address ::1/128
+             address fe80::/10
+             address fc00::/7
+         }
+         server time1.vyos.net {
+         }
+         server time2.vyos.net {
+         }
+         server time3.vyos.net {
+         }
+     }
+ }
+ system {
+     config-management {
+         commit-revisions 100
+     }
+     console {
+         device ttyS0 {
+             speed 115200
+         }
+     }
+     host-name vyos
+     login {
+         user vyos {
+             authentication {
+                 encrypted-password $6$rounds=656000$IMD/8Pmm5AS1u0if$YEk2FIXcePor1xZ18c.LNAY7vwFaxgQmwX240CoxSIBWIMf0RzOnSpYEPx66sYvIip0gSSIMcq9s3UjMiiQT..
+                 plaintext-password ""
+             }
+         }
+     }
+     syslog {
+         global {
+             facility all {
+                 level info
+             }
+             facility local7 {
+                 level debug
+             }
+         }
+     }
+ }
