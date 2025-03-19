@@ -1,11 +1,33 @@
 # Порядок действий для развертывания pgsql + zabbix-агента на Astra linux
 
+## Установка локали en_US.UTF-8
+```
+sudo sed -i "s/^#\s*\(en_US.UTF-8 UTF-8\)/\1/" /etc/locale.gen
+sudo locale-gen en_US.UTF-8
+sudo update-locale en_US.UTF-8
+locale -a
+```
+
+## Пакетики
 ```
 sudo apt install -y zabbix-agent php-pgsql
 ```
----
-## PGSQL
 
+## PGSQL
+```
+sudo systemctl enable postgresql --now
+```
+---
+`/etc/postgresql/15/main/postgresql.conf`:
+```
+listen_addresses = '*'
+```
+---
+`/etc/postgresql/15/main/pg_hba.conf`:
+```
+host    zabbix_db       zabbix_user      192.168.10.1/32         scram-sha-256
+```
+---
 `sudo -u postgres psql`:
 ```
 CREATE ROLE superadmin WITH LOGIN SUPERUSER PASSWORD 'P@ssw0rdSkills';
@@ -27,14 +49,6 @@ GRANT ALL PRIVILEGES ON DATABASE gitflic_db TO gitflic_user;
 
 GRANT CONNECT ON DATABASE keycloak_db TO kc_user;
 GRANT ALL PRIVILEGES ON DATABASE keycloak_db TO kc_user;
-```
----
-`/etc/postgres/*/main/pg_hba.conf`:
-```
-# TYPE  DATABASE        USER            ADDRESS                 METHOD
-host    zabbix_db       zabbix_user     0.0.0.0/0               scram-sha-256
-host    gitflic_db      gitflic_user    0.0.0.0/0               scram-sha-256
-host    keycloak_db     kc_user         0.0.0.0/0               scram-sha-256
 ```
 ---
 ```
