@@ -7,6 +7,9 @@ deb https://dl.astralinux.ru/aldpro/frozen/01/2.4.0 1.7_x86-64 main base
 
 Установка:
 ```bash
+# Обновление до 1.7.6
+sudo apt update && sudo apt dist-upgrade -y
+
 # Пакеты - DC-A + DC-B
 sudo DEBIAN_FRONTEND=noninteractive apt-get install -y -q syslog-ng-mod-astra aldpro-mp aldpro-gc aldpro-syncer
 
