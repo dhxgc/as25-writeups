@@ -1,8 +1,0 @@
-# !!! sudo docker build -t pgsql:as25 .
-
-services:
-  pgsql:
-    image: pgsql:as25
-    ports:
-      5432:5432
-    restart: always
