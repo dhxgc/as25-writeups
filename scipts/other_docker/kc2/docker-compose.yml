@@ -1,0 +1,25 @@
+services:
+  kc:
+    image: my-kc:1
+    container_name: kc
+    hostname: kc.atom25.local
+    restart: always
+    environment:
+#      - KC_DB=postgres
+#      - KC_DB_URL=jdbc:postgresql://cloud-infra.atom25.local:5432/kc_db
+#      - KC_DB_USERNAME=kc_user
+#      - KC_DB_PASSWORD=P@ssw0rdSkills
+      - KEYCLOAK_ADMIN=admin
+      - KEYCLOAK_ADMIN_PASSWORD=P@ssw0rd
+      - KC_HTTPS_CERTIFICATE_FILE=/opt/keycloak/conf/server.crt
+      - KC_HTTPS_CERTIFICATE_KEY_FILE=/opt/keycloak/conf/server.key
+      - KC_HOSTNAME=kc.atom25.local
+      #- KC_HOSTNAME_ADMIN_URL='https://kc.atom25.local'
+    command: start-dev
+    volumes:
+      - ./kc.crt:/opt/keycloak/conf/server.crt
+      - ./kc.key:/opt/keycloak/conf/server.key
+#    network_mode: host
+    ports:
+      - 8443:8443
+      - 8080:8080
