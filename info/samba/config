@@ -1,0 +1,6 @@
+ - починил хрони на dc-a
+ - починил в gui srv-a
+ - добавил сервер на установку в web'е
+ - по идее форсировал установку через:
+   - aldpro-rules --action install --subsystem_settings smb (надо ли вообще?)
+   - aldpro-rules --iud
