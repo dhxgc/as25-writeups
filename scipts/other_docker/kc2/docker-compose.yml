@@ -19,6 +19,7 @@ services:
     volumes:
       - ./kc.crt:/opt/keycloak/conf/server.crt
       - ./kc.key:/opt/keycloak/conf/server.key
+      - ./themes/login/:/opt/keycloak/themes/as25-theme/login/
 #    network_mode: host
     ports:
       - 8443:8443

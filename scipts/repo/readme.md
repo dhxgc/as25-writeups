@@ -27,6 +27,9 @@ gpg --armor --export atom25@atom25.local > /home/astra/deb/repo.gpg
  - добавить ключ в доверенные (на клиенте):
 ```bash
 apt-key add repo.gpg
+
+# фикс предупреждения у апта при апдейте
+cp /etc/apt/trusted.gpg /etc/apt/trusted.gpg.d/
 ```
 
  - vim /etc/nginx/sites-available/repo

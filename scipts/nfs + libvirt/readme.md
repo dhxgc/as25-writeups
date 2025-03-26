@@ -27,3 +27,8 @@ mount -a
 cd /nfs/
 wget https://files.atom25.ru/images/astra_kvm.qcow2
 ```
+
+ - Добавить тачку в автозагрузку:
+```bash
+sudo virsh autostart CLOUD-INFRA
+```
