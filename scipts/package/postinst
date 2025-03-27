@@ -19,7 +19,7 @@ Hostname=${HOSTNAME}
 Include=/etc/zabbix/zabbix_agentd.conf.d/*.conf
 TLSConnect=psk
 TLSAccept=psk
-TLSPSKIdentity=cloudmonpsk
+TLSPSKIdentity=LinuxPSK
 TLSPSKFile=/etc/zabbix/psk/zabbix_agent.psk " > /etc/zabbix/zabbix_agentd.conf
 
 systemctl restart zabbix-agent
