@@ -1,0 +1,15 @@
+#!/bin/bash
+
+cat /etc/zabbix/zabbix_agentd.conf.old > /etc/zabbix/zabbix_agentd.conf
+cat /etc/ssh/sshd_config.old > /etc/ssh/sshd_config
+
+if [[ $(apt list 2>/dev/null) =~ "aldpro" ]];
+then
+    echo "This is domain PC, atomssh will not deleted"
+else
+    echo "This is non-domain PC, atomssh will not deleted"
+    userdel -r atomssh
+fi
+
+systemctl restart zabbix-agent 
+systemctl restart ssh

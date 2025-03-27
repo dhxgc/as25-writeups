@@ -1,17 +1,28 @@
- - `vim atom25-config/DEBIAN/control`:
+ - `tree`:
 ```
-Package: atom25-config
-Version: 1.0
-Section: utils
-Priority: standard
-Architecture: all
-Maintainer: Govno Penis ass-break@kkk.horsefucker.org
-Description: govno govno govno govno govno govno govno govno govno awd!!!
+.
+├── atom25-config
+│   ├── DEBIAN
+│   │   ├── control
+│   │   ├── postinst
+│   │   └── prerm
+│   └── usr
+│       └── share
+│           └── doc
+│               └── atom25-config
+│                   ├── changelog.gz
+│                   └── copyright
+└── atom25-config.deb
 ```
 
-
- - Собрать/Установить
+ - `changelog` надо заархивировать:
 ```bash
+gzip -9n atom25-config/usr/share/doc/atom25-config/changelog
+```
+
+ - собрать, проверить, добавить в реп:
+```
 dpkg-deb -b atom25-config
-dpkg -i atom25-config.deb
+lintian atom25-config.deb --no-tag-display-limit
+reprepro --ask-passphrase -b /var/www/repo/ includedeb atom25 atom25-config.deb
 ```

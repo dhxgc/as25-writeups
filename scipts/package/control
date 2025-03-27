@@ -1,0 +1,9 @@
+Package: atom25-config
+Version: 1.0
+Section: utils
+Priority: standard
+Architecture: all
+Maintainer: Bebra Longu <gangster-2005@atom25.local>
+Depends: zabbix-agent, ssh, passwd
+Description: Prepared by experienced English teachers, the texts, articles and conversations are brief and appropriate to your level of proficiency.
+  Take the multiple-choice quiz following each text, and you'll get the results immediately.

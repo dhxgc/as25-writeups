@@ -1,0 +1,81 @@
+#!/bin/bash
+
+# ZABBIX
+
+HOSTNAME=$(hostname)
+
+cp /etc/zabbix/zabbix_agentd.conf{,.old}
+mkdir -p /etc/zabbix/psk/
+
+echo '14d138074191910d3c2013bb622f6f9e60b9dfffbec239c93cad48e8e7cc0342' > /etc/zabbix/psk/zabbix_agent.psk
+echo "
+PidFile=/run/zabbix/zabbix_agentd.pid
+LogFile=/var/log/zabbix-agent/zabbix_agentd.log
+LogFileSize=0
+Server=zabbix.atom25.local
+ListenPort=10050
+ServerActive=zabbix.atom25.local
+Hostname=${HOSTNAME}
+Include=/etc/zabbix/zabbix_agentd.conf.d/*.conf
+TLSConnect=psk
+TLSAccept=psk
+TLSPSKIdentity=cloudmonpsk
+TLSPSKFile=/etc/zabbix/psk/zabbix_agent.psk " > /etc/zabbix/zabbix_agentd.conf
+
+systemctl restart zabbix-agent
+
+# SSH
+cp /etc/ssh/sshd_config{,.old}
+
+if [[ $(apt list 2>/dev/null) =~ "aldpro" ]];
+then
+        if [[ $(cat /etc/astra_version) =~ '1.7' ]];
+        then
+echo "
+Port 31337
+DenyGroups *
+AllowGroups admin
+
+Include /etc/ssh/sshd_config.d/*.conf
+ChallengeResponseAuthentication no
+UsePAM yes
+X11Forwarding yes
+X11UseLocalhost no
+PrintMotd no
+AcceptEnv LANG LC_*
+Subsystem       sftp    /usr/lib/openssh/sftp-server" > /etc/ssh/sshd_config
+        elif [[ $(cat /etc/astra_version) =~ '1.8' ]];
+        then
+        echo "
+Port 31337
+DenyGroups *
+AllowGroups admin@office.atom25.local admin@atom25.local admin@branch.atom25.local
+
+Include /etc/ssh/sshd_config.d/*.conf
+ChallengeResponseAuthentication no
+UsePAM yes
+X11Forwarding yes
+X11UseLocalhost no
+PrintMotd no
+AcceptEnv LANG LC_*
+Subsystem       sftp    /usr/lib/openssh/sftp-server" > /etc/ssh/sshd_config
+        fi
+else
+        useradd -m -s /bin/bash atomssh
+        echo "atomssh:P@ssw0rdSkills" | chpasswd
+
+        echo "
+Port 31337
+DenyUsers *
+AllowUsers atomssh
+Include /etc/ssh/sshd_config.d/*.conf
+ChallengeResponseAuthentication no
+UsePAM yes
+X11Forwarding yes
+X11UseLocalhost no
+PrintMotd no
+AcceptEnv LANG LC_*
+Subsystem       sftp    /usr/lib/openssh/sftp-server" > /etc/ssh/sshd_config
+fi
+
+systemctl restart ssh
