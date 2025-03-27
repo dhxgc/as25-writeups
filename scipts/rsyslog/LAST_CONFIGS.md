@@ -2,27 +2,56 @@
 
 Создать папки:
 ```
-mkdir /opt/logs
-chmod 755 -R /opt/logs 
+sudo mkdir /opt/logs
+sudo chmod 755 -R /opt/logs 
 ```
-`Модули раскомментить`
+`Модули раскомментить` +
 `/etc/rsyslog.conf`:
 ```
-$template RemoteLogs, "/opt/logs/%HOSTNAME%-%PROGRAMNAME%.log"
+$template RemoteLogs, "/opt/logs/%HOSTNAME%.log"
 if $syslogseverity <= 3 then ?RemoteLogs
 & stop
 
 $template RemoteBashLog, "/opt/logs/%HOSTNAME%.log"
-:syslogtag, isequal, "bash-history" -?RemoteBashLog
+:syslogtag, startswith, "bash-history" -?RemoteBashLog
 & stop
 ```
 
+```
+sudo systemctl restart rsyslog
+```
+---
 # DC-*, SRV-A:
-`/etc/rsyslog.conf`:
+
+`/etc/syslog-ng/syslog-ng.conf`:
 ```
-*.error @cloud-mon.atom25.local:514
+destination d_remote {
+    syslog(
+        "cloud-mon.atom25.local"
+        transport("udp")
+        port(514)
+    );
+};
+
+log {
+    source(s_src);
+    filter(f_error);
+    destination(d_remote);
+}
 ```
+
+```
+sudo systemctl restart syslog-ng
+```
+---
 # CLI-*
+
+`/etc/bash.bashrc`:
+```bash
+if [[ $(groups) =~ "atom25.local"  ]]; then
+        trap 'logger -t bash-history "login=${USER} cwd=${PWD} filename=$(which ${BASH_COMMAND}) cmdline=${BASH_COMMAND}"' >
+fi
+```
 
 `/etc/syslog-ng/syslog-ng.conf`:
 ```
@@ -41,9 +70,6 @@ log {
 };
 ```
 
-`/etc/bash.bashrc`:
-```bash
-if [[ $(groups) =~ "atom25.local"  ]]; then
-        trap 'logger -t bash-history "login=${USER} cwd=${PWD} filename=$(which ${BASH_COMMAND}) cmdline=${BASH_COMMAND}"' >
-fi
+```
+sudo systemctl restart syslog-ng
 ```
