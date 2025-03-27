@@ -31,7 +31,7 @@ filter f_bash_history {
 };
 
 destination d_rsyslog {
-    network("cloud-mon.atom25.local" transport("ucp") port(514));
+    network("cloud-mon.atom25.local" transport("udp") port(514));
 };
 
 log {
