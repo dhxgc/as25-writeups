@@ -27,6 +27,6 @@ $template RemoteBashLog, "/opt/logs/%HOSTNAME%.log"
 `/etc/bash.bashrc`:
 ```bash
 if [[ $(groups) =~ "atom25.local"  ]]; then
-        trap 'logger -n cloud-mon.atom25.local -t bash-history "login=${USER} cwd=${PWD} filename=$(which ${BASH_COMMAND}) cmdline=${BASH_COMMAND}"' DEBUG
+        trap 'logger -t bash-history "login=${USER} cwd=${PWD} filename=$(which ${BASH_COMMAND}) cmdline=${BASH_COMMAND}"' DEBUG
 fi
 ```
