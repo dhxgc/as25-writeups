@@ -1,0 +1,37 @@
+Источники:
+https://wiki.astralinux.ru/pages/viewpage.action?pageId=105976211#id-СетеваяфайловаясистемаNFSсаутентификациейKerberosвдоменеFreeIPA-krb-client
+https://www.arus.ru/index.php/biblioteka/item/10569-nfs-server-v-domene-freeipa-2
+
+Команды:
+1) sudo apt install nfs-kernel-server
+2) 	sudo sed -i 's/^[[:space:]]*NEED_SVCGSSD[[:space:]]*=.*/NEED_SVCGSSD="yes"/' /etc/default/nfs-kernel-server
+	sudo sed -i 's/^[[:space:]]*NEED_GSSD[[:space:]]*=.*/NEED_GSSD=yes/' /etc/default/nfs-common
+	sudo sed -i 's/^[[:space:]]*NEED_IDMAPD[[:space:]]*=.*/NEED_IDMAPD=yes/' /etc/default/nfs-common
+3) Зарегать службу
+4) sudo ipa-getkeytab -s dc-a.office.atom25.local -p nfs/srv-a.office.atom25.local -k /etc/krb5.keytab
+5) Папочки, експорт и права
+
+
+Клиент:
+1) apt install autofs nfs-common
+2) 	sudo sed -i 's/^[[:space:]]*NEED_GSSD[[:space:]]*=.*/NEED_SVCGSSD="yes"/' /etc/default/nfs-common
+	sudo sed -i 's/^[[:space:]]*NEED_IDMAPD[[:space:]]*=.*/NEED_IDMAPD="yes"/' /etc/default/nfs-common
+3) ДЛЯ КЕРБЕРОСА - зарегать службу на клиенте
+) ipa-client-automount --location=default 
+	* Ответить yes
+
+Дополнительно:
+ - Если все не работает, сделать на клиенте: ipa-client-automount --uninstall
+
+Права: 	1777 root/root на /profiles
+
+
+С КЕРБЕРОСОМ:
+
+/profiles gss/krb5(rw,sync,no_subtree_check,no_root_squash)
+-rw,no_root_squash,sec=krb5 srv-a.office.atom25.local:/profiles
+
+БЕЗ КЕРБЕРОСА
+
+/profiles *(rw,sync,no_subtree_check,no_root_squash)
+-rw,no_root_squash srv-a.office.atom25.local:/profiles
