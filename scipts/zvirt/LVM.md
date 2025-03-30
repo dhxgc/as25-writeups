@@ -159,8 +159,8 @@ sudo apt install -y nfs-kernel-server
 ```
 `/etc/exports`:
 ```
-/mnt/hestorage *(rw,sync,no_subtree_check,no_root_squash)
-/mnt/vm-nfs *(rw,sync,no_subtree_check,no_root_squash)
+/mnt/hestorage *(rw,anonuid=36,anongid=36)
+/mnt/vm-nfs *(rw,anonuid=36,anongid=36)
 ```
 ```
 sudo systemctl restart nfs-kernel-server
