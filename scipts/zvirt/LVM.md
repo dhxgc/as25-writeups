@@ -9,8 +9,6 @@ sudo vgcfgrestore vg_str
 sudo vgcfgbackup vg_str
 ```
 
-
-
 ## PARTED
 
 Для каждого диска (`/dev/sdb`, `/dev/sdc`, `/dev/sdd`):
