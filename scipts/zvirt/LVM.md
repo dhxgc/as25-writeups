@@ -69,7 +69,7 @@ sudo vgcreate vg_str /dev/sdb1 /dev/sdc1 /dev/sdd1
 Логические тома (LV):
 ##### a. **HostedStorage** (62 Гб, Mirror)
 ```bash
-sudo lvcreate --type mirror -m 1 -L 62G -n HostedStorage vg_str
+sudo lvcreate --type mirror -m 1 -L 31G -n HostedStorage vg_str
 ```
 - `-m 1` — зеркалирование на 2 диска.
 
