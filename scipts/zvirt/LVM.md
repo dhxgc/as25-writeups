@@ -152,39 +152,76 @@ sudo mkfs.ext4 /dev/vg_str/HostedStorage
 sudo mkfs.ext4 /dev/vg_str/VMNFS
 sudo mkfs.ext4 /dev/vg_str/Data
 ```
-
-`Монтирование и fstab`:
+---
 ```
 sudo mkdir -p /mnt/hestorage /mnt/vm-nfs /mnt/Data
-echo -e "\n# LVM mounts\n/dev/vg_str/HostedStorage /mnt/hestorage ext4 defaults 0 0\n/dev/vg_str/VMNFS /mnt/vm-nfs ext4 defaults 0 0\n/dev/vg_str/Data /mnt/Data ext4 defaults 0 0" | sudo tee -a /etc/fstab
+```
+`/etc/fstab`:
+```
+/dev/vg_str/HostedStorage /mnt/hestorage ext4 defaults 0 0
+/dev/vg_str/VMNFS /mnt/vm-nfs ext4 defaults 0 0
+/dev/vg_str/Data /mnt/Data ext4 defaults 0 0
+```
+```
 sudo mount -a
 ```
-
+---
 `NFS`:
 ```
 sudo apt install -y nfs-kernel-server
-echo "/mnt/hestorage *(rw,sync,no_subtree_check,no_root_squash)" | sudo tee -a /etc/exports
-echo "/mnt/vm-nfs *(rw,sync,no_subtree_check,no_root_squash)" | sudo tee -a /etc/exports
+```
+`/etc/exports`:
+```
+/mnt/hestorage *(rw,sync,no_subtree_check,no_root_squash)
+/mnt/vm-nfs *(rw,sync,no_subtree_check,no_root_squash)
+```
+```
 sudo systemctl restart nfs-kernel-server
 ```
-
+---
 `SMB`:
 ```
 sudo apt install -y samba
-echo -e "[Data]\n  path = /mnt/Data\n  valid users = @DOMAIN\\user\n  read only = no\n  guest ok = no" | sudo tee -a /etc/samba/smb.conf
+```
+`/etc/samba/smb.conf`:
+```
+[Data]
+  path = /mnt/Data
+  valid users = @DOMAIN\\user 
+  read only = no
+  guest ok = no
+```
+```
 sudo systemctl restart smbd
 ```
-
+---
 `iSCSI`:
 ```
 sudo apt install -y targetcli-fb
-sudo targetcli <<EOF
-backstores/block create name=vm-iscsi dev=/dev/vg_str/VMISCSI
-iscsi/ create iqn.2023-08.storage.atom.skills:vm-iscsi
-iscsi/iqn.2023-08.storage.atom.skills:vm-iscsi/tpg1/luns/ create /backstores/block/vm-iscsi
-iscsi/iqn.2023-08.storage.atom.skills:vm-iscsi/tpg1/acls/ create iqn.2023-08.client:initiator
-saveconfig
-exit
-EOF
+```
+`Пошагово`:
+```
+/> backstores/block create name=vm-iscsi dev=/dev/vg_str/VMISCSI
+/> iscsi/ create iqn.2023-08.storage.atom.skills:vm-iscsi
+/> iscsi/iqn.2023-08.storage.atom.skills:vm-iscsi/tpg1/luns/ create /backstores/block/vm-iscsi
+/> iscsi/iqn.2023-08.storage.atom.skills:vm-iscsi/tpg1/acls/ create iqn.2023-08.client:initiator
+/> saveconfig
+/> exit
+```
+```
 sudo systemctl restart target
+```
+---
+### Проверка
+nfs
+```
+sudo showmount -e
+```
+smb
+```
+testparm 
+```
+iSCSI
+```
+sudo targetcli ls
 ```
