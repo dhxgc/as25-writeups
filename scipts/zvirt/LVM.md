@@ -104,18 +104,7 @@ sudo lvcreate -l 100%FREE -n Data LVM
   ```bash
   sudo pvs
   ```
-
 ---
-
-#### **7. Форматирование и монтирование**
-Для каждого том:
-```bash
-sudo mkfs.ext4 /dev/LVM/HostedStorage
-sudo mkdir /mnt/HostedStorage
-sudo mount /dev/LVM/HostedStorage /mnt/HostedStorage
-```
-Аналогично для `VMNFS`, `VMISCSI`, `Data`.
-
 
 ## Удаление
 
