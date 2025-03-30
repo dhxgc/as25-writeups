@@ -61,7 +61,7 @@ sudo pvcreate /dev/sdb1 /dev/sdc1 /dev/sdd1
 
 Группа томов (VG):
 ```bash
-sudo vgcreate vg_str /dev/sdb1 /dev/sdc1 /dev/sdd1
+sudo vgcreate LVM /dev/sdb1 /dev/sdc1 /dev/sdd1
 ```
 
 ---
@@ -69,24 +69,24 @@ sudo vgcreate vg_str /dev/sdb1 /dev/sdc1 /dev/sdd1
 Логические тома (LV):
 ##### a. **HostedStorage** (62 Гб, Mirror)
 ```bash
-sudo lvcreate --type mirror -m 1 -L 31G -n HostedStorage vg_str
+sudo lvcreate --type mirror -m 1 -L 31G -n HostedStorage LVM
 ```
 - `-m 1` — зеркалирование на 2 диска.
 
 ##### b. **VMNFS** (75 Гб, Striped)
 ```bash
-sudo lvcreate -i 2 -I 64 -L 75G -n VMNFS vg_str
+sudo lvcreate -i 2 -I 64 -L 75G -n VMNFS LVM
 ```
 - `-i 2` — чередование по 2 дискам.
 
 ##### c. **VMISCSI** (75 Гб, Striped)
 ```bash
-sudo lvcreate -i 2 -I 64 -L 75G -n VMISCSI vg_str
+sudo lvcreate -i 2 -I 64 -L 75G -n VMISCSI LVM
 ```
 
 ##### d. **Data** (оставшееся место, Linear)
 ```bash
-sudo lvcreate -l 100%FREE -n Data vg_str
+sudo lvcreate -l 100%FREE -n Data LVM
 ```
 
 ---
@@ -110,9 +110,9 @@ sudo lvcreate -l 100%FREE -n Data vg_str
 #### **7. Форматирование и монтирование**
 Для каждого том:
 ```bash
-sudo mkfs.ext4 /dev/vg_str/HostedStorage
+sudo mkfs.ext4 /dev/LVM/HostedStorage
 sudo mkdir /mnt/HostedStorage
-sudo mount /dev/vg_str/HostedStorage /mnt/HostedStorage
+sudo mount /dev/LVM/HostedStorage /mnt/HostedStorage
 ```
 Аналогично для `VMNFS`, `VMISCSI`, `Data`.
 
@@ -121,36 +121,36 @@ sudo mount /dev/vg_str/HostedStorage /mnt/HostedStorage
 
 `Посмотреть + проверка`:
 ```
-sudo vgdisplay vg_str
+sudo vgdisplay LVM
 ```
 
 `Если требуется`:
 ```
-sudo umount /dev/vg_str/HostedStorage
+sudo umount /dev/LVM/HostedStorage
 ```
 
 `Удаление`:
 ```
-sudo lvremove /dev/vg_str/HostedStorage
+sudo lvremove /dev/LVM/HostedStorage
 ```
 
 `Изменение размера после удаления`:
 ```
-sudo lvextend -l +100%FREE /dev/vg_str/Data
+sudo lvextend -l +100%FREE /dev/LVM/Data
 ```
 
 `Расширение файловой системы (если она уже была отформатирована)`:
 ```
-sudo resize2fs /dev/vg_str/Data  # Для ext4
+sudo resize2fs /dev/LVM/Data  # Для ext4
 ```
 
 ### ФОРМАТИРОВАНИЕ + МОНТИРОВАНИЕ
 
 `Форматирование`:
 ```
-sudo mkfs.ext4 /dev/vg_str/HostedStorage
-sudo mkfs.ext4 /dev/vg_str/VMNFS
-sudo mkfs.ext4 /dev/vg_str/Data
+sudo mkfs.ext4 /dev/LVM/HostedStorage
+sudo mkfs.ext4 /dev/LVM/VMNFS
+sudo mkfs.ext4 /dev/LVM/Data
 ```
 ---
 ```
@@ -158,9 +158,9 @@ sudo mkdir -p /mnt/hestorage /mnt/vm-nfs /mnt/Data
 ```
 `/etc/fstab`:
 ```
-/dev/vg_str/HostedStorage /mnt/hestorage ext4 defaults 0 0
-/dev/vg_str/VMNFS /mnt/vm-nfs ext4 defaults 0 0
-/dev/vg_str/Data /mnt/Data ext4 defaults 0 0
+/dev/LVM/HostedStorage /mnt/hestorage ext4 defaults 0 0
+/dev/LVM/VMNFS /mnt/vm-nfs ext4 defaults 0 0
+/dev/LVM/Data /mnt/Data ext4 defaults 0 0
 ```
 ```
 sudo mount -a
@@ -187,7 +187,7 @@ sudo apt install -y samba
 ```
 [Data]
   path = /mnt/Data
-  valid users = @DOMAIN\\user 
+  valid users = <@DOMAIN\\user> 
   read only = no
   guest ok = no
 ```
@@ -201,7 +201,7 @@ sudo apt install -y targetcli-fb
 ```
 `Пошагово`:
 ```
-/> backstores/block create name=vm-iscsi dev=/dev/vg_str/VMISCSI
+/> backstores/block create name=vm-iscsi dev=/dev/LVM/VMISCSI
 /> iscsi/ create iqn.2023-08.storage.atom.skills:vm-iscsi
 /> iscsi/iqn.2023-08.storage.atom.skills:vm-iscsi/tpg1/luns/ create /backstores/block/vm-iscsi
 /> iscsi/iqn.2023-08.storage.atom.skills:vm-iscsi/tpg1/acls/ create iqn.2023-08.client:initiator
