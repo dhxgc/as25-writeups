@@ -1,0 +1,19 @@
+Get-ADGroupMember -Identity core-wd-admins | select name,SID | Export-Csv "users.csv" -NoTypeInformation -Encoding UTF8 -Delimiter ','
+
+=====================
+
+Get-ADGroupMember -Identity core-web-admins | select name | Export-Csv -NoTypeInformation -Encoding UTF8 core-web-admins.txt
+tr -d '"' < core-web-admins.csv > cwa.txt
+
+=====================
+
+#!/bin/bash
+
+GID=
+FILENAME="cwa.txt"
+LINE=1
+
+$NAME=$(sed "${LINE}!d" $FILENAME)
+HOMEDIR="/home/${NAME}"
+
+yes P@ssw0rd | ipa user-add $NAME --gidnumber=${GID} --homedir=${HOMEDIR} --first=${NAME} --last=${NAME} --password
