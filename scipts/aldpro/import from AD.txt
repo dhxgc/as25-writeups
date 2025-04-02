@@ -8,12 +8,24 @@ tr -d '"' < core-web-admins.csv > cwa.txt
 =====================
 
 #!/bin/bash
+GID=448600007
+LINE=2
+END_LINE=5
+FILE="group2"
 
-GID=
-FILENAME="cwa.txt"
-LINE=1
+while ((LINE!=END_LINE)); do
+        USERNAME=$(sed "${LINE}!d" ${FILE})
+        ipa group-add-member "core-wd-admins" --users=$USERNAME
+        LINE=$(($LINE+1))
+done
 
-$NAME=$(sed "${LINE}!d" $FILENAME)
-HOMEDIR="/home/${NAME}"
+#!/bin/bash
+LINE=2
+END_LINE=5
+FILE="group2"
 
-yes P@ssw0rd | ipa user-add $NAME --gidnumber=${GID} --homedir=${HOMEDIR} --first=${NAME} --last=${NAME} --password
+while ((LINE!=END_LINE)); do
+        USERNAME=$(sed "${LINE}!d" ${FILE})
+        yes P@ssw0rd | ipa user-add $USERNAME --first=$USERNAME --last=$USERNAME --password
+        LINE=$(($LINE+1))
+done

@@ -35,3 +35,9 @@ Realm Settings -> Tokens:
     Acces Token Lifespan -> 2 minutes
     Client Login Timeout -> 5 Minutes
 ```
+
+Добавить сервис в автозагрузку:
+ - В `/etc/systemd/system/kc.service` нужны лишь:
+   - [Unit], в нем Description
+   - [Service], в нем ExecStart
+   - [Install], в нем WantedBy, я поставил мульти-юзер таргет
