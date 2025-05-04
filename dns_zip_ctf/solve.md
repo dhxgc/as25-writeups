@@ -24,15 +24,19 @@ with open(OUTPUT, "wb") as f:
     f.write(base64.b64decode(extract_parts("capture.pcap")))
 ```
 Теперь у нас есть архив, при попытке его разархивировать обнаруживаем, что он защищен паролем. Возвращаемся к .pcap файлу и продолжаем анализировать записи. Если внимательно все изучить, то можно обнаружить, что у всех записей строки "Src Port" в UDP отличаются значительно, например:
+
 ![4](https://github.com/dhxgc/as25-writeups/blob/main/dns_zip_ctf/img/4.jpg?raw=true)
 
 ![5](https://github.com/dhxgc/as25-writeups/blob/main/dns_zip_ctf/img/5.jpg?raw=true)
 
 ![6](https://github.com/dhxgc/as25-writeups/blob/main/dns_zip_ctf/img/6.jpg?raw=true)
+
 У большинства записей он будет пятизначным/четырехзначным числом, либо же равен 53, лишь у малой части будут отличия. Нам нужно обратить внимание на двузначные/трехзначные source-порты, так как они являются ascii кодами:
+
 ![7](https://github.com/dhxgc/as25-writeups/blob/main/dns_zip_ctf/img/7.jpg?raw=true)
 
 ![8](https://github.com/dhxgc/as25-writeups/blob/main/dns_zip_ctf/img/8.jpg?raw=true)
+
 Далее мы либо вручную сопоставляем коды с символами по таблице ascii, либо используем скрипт для преобразования:
 ```
 codes = input("Codes: ").split()
