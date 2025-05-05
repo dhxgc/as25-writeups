@@ -4,7 +4,7 @@ exiftool plant.jpg
 ```
 Наблюдаем достаточно большое количество информации, но нас интересует комментарий:
 
-[1](https://github.com/dhxgc/as25-writeups/blob/main/mysterious_plant_ctf/img/1.jpg?raw=true)
+![1](https://github.com/dhxgc/as25-writeups/blob/main/mysterious_plant_ctf/img/1.jpg?raw=true)
 
 Подсказка намекает на crc32 изображения, поэтому далее нам необходимо вычислить ее, делаем это при помощи скрипта:
 ```
@@ -35,7 +35,7 @@ zipinfo -z vault.zip
 
 Получаем следующий вывод:
 
-[2](https://github.com/dhxgc/as25-writeups/blob/main/mysterious_plant_ctf/img/2.jpg?raw=true)
+![2](https://github.com/dhxgc/as25-writeups/blob/main/mysterious_plant_ctf/img/2.jpg?raw=true)
 
 Подсказка указывает на то, что паролем является какой-то отпечаток из 64 символов, можно сделать предположение, что речь о хеше, а именно SHA-256 (64 символа). Значит, нам нужно преобразовать координаты в хеш SHA-256, для этого используем скрипт:
 ```
