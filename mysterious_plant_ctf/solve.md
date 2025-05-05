@@ -42,3 +42,9 @@ zipinfo -z vault.zip
 import hashlib  
 coordinates = "55.7522,37.6214"  
 password = hashlib.sha256(coordinates.encode()).hexdigest()  
+```
+
+Используем полученный из скрипта пароль для разархивации и получаем флаг:
+```
+unzip -P 7f9c4a08b17a6d7d7b7d7a7d7a7d7a7d7a7d7a7d7a7d7a7d7a7d7a7d7a vault.zip  
+```
